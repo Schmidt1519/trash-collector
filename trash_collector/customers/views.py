@@ -1,7 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Customer
+<<<<<<< HEAD
 from django.http import HttpResponse, HttpResponseRedirect
+=======
+>>>>>>> 6a62b5364d9eb055334ce451968a1f57e38a762b
 from django.urls import reverse
 # Create your views here.
 
@@ -17,13 +20,26 @@ def index(request):
     print(user)
     return render(request, 'customers/index.html')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6a62b5364d9eb055334ce451968a1f57e38a762b
 def create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         address = request.POST.get('address')
         zip_code = request.POST.get('zip_code')
         pickup_day = request.POST.get('pickup_day')
+<<<<<<< HEAD
         new_customer = Customer(name=name, address=address, zip_code=zip_code, balance=balance, one_time_pickup=one_time_pickup, suspension_start=suspension_start, suspension_end=suspension_end, user=user)
+=======
+        # balance = request.POST.get('balance')
+        # one_time_pickup = request.POST.get('one_time_pickup')
+        # suspension_start = request.POST.get('suspension_start')
+        # suspension_end = request.POST.get('suspension_end')
+        new_customer = Customer(name=name, address=address, zip_code=zip_code, pickup_day=pickup_day)
+        # new_customer = Customer(name=name, address=address, zip_code=zip_code, balance=balance, one_time_pickup=one_time_pickup, suspension_start=suspension_start, suspension_end=suspension_end)
+>>>>>>> 6a62b5364d9eb055334ce451968a1f57e38a762b
         new_customer.save()
         return HttpResponseRedirect(reverse('customers:index'))
     else:

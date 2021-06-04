@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -11,4 +10,3 @@ class Employees(models.Model):
 
     def __str__(self):
         return self
-# TODO: Create an Employee model with properties required by the user stories
