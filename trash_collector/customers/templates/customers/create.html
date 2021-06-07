@@ -8,17 +8,15 @@
 {% block content %}
 
     <p>Register</p>
-        <form action="{% url 'customers:create' %}" method="post">
+        <form action="{% url 'customers:create_profile' %}" method="post">
             {% csrf_token %}
             Name:<input type="text" name="name" id="name"><br>
             Address:<input type="text" name="address" id="address"><br>
             Zip Code:<input type="text" name="zip_code" id="zip_code"><br>
-            Pickup Day:<input type="text" name="pickup_day" id="pickup_day"><br>
-            <br>
-            <input type="submit" value="Update Profile">
+            Pickup Day:<input type="date" name="pickup_day" id="pickup_day"><br>
+            <input type="submit" value="Submit Profile">
         </form>
 
     <a href="{% url 'customers:index' %}">Home</a>
-
 
 {% endblock %}

@@ -17,18 +17,21 @@ def index(request):
     return render(request, 'customers/index.html')
 
 
-def create(request):
+def detail(request):
+    user = request.user
+    customer_detail = Customer.objects.get(user=user)
+    context = {"customer_detail": customer_detail}
+    return render(request, 'customers/detail.html', context)
+
+
+def create_profile(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         address = request.POST.get('address')
         zip_code = request.POST.get('zip_code')
         pickup_day = request.POST.get('pickup_day')
-        # balance = request.POST.get('balance')
-        # one_time_pickup = request.POST.get('one_time_pickup')
-        # suspension_start = request.POST.get('suspension_start')
-        # suspension_end = request.POST.get('suspension_end')
-        new_customer = Customer(name=name, address=address, zip_code=zip_code, pickup_day=pickup_day)
-        # new_customer = Customer(name=name, address=address, zip_code=zip_code, balance=balance, one_time_pickup=one_time_pickup, suspension_start=suspension_start, suspension_end=suspension_end)
+        user = request.user
+        new_customer = Customer(name=name, address=address, zip_code=zip_code, pickup_day=pickup_day, user=user)
         new_customer.save()
         return HttpResponseRedirect(reverse('customers:index'))
     else:
