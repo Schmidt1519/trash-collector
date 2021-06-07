@@ -2,6 +2,8 @@ from django.db import models
 from datetime import datetime
 # Create your models here.
 
+# TODO: Finish customer model by adding necessary properties to fulfill user stories
+
 
 class Customer(models.Model):
     name = models.CharField(max_length=50)
