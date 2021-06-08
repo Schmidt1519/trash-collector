@@ -10,13 +10,13 @@
     <p>Edit Profile</p>
         <form action="{% url 'customers:edit_profile' %}" method="post">
             {% csrf_token %}
-            Name:<input type="text" name="name" id="name"><br>
+            Name:<input type="text" name="name" id="name" value="{{customer_edit_profile.name}}"><br>
             <br>
-            Address:<input type="text" name="address" id="address"><br>
+            Address:<input type="text" name="address" id="address" value="{{customer_edit_profile.address}}"><br>
             <br>
-            Zip Code:<input type="text" name="zip_code" id="zip_code"><br>
+            Zip Code:<input type="text" name="zip_code" id="zip_code" value="{{customer_edit_profile.zip_code}}"><br>
             <br>
-            Pickup Day:<input type="text" name="pickup_day" id="pickup_day"><br>
+            Pickup Day:<input type="text" name="pickup_day" id="pickup_day" value="{{customer_edit_profile.pickup_day}}"><br>
             <br>
             <input type="submit" value="Confirm">
         </form>

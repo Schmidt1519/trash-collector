@@ -3,9 +3,8 @@ from django.shortcuts import render
 from django.apps import apps
 from .models import Employees
 from django.urls import reverse
-from datetime import date
-import calendar
 from datetime import datetime as dt
+from datetime import datetime
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -19,23 +18,25 @@ def index(request):
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.all()
 
-    # datetime_object = datetime.datetime.now()
-    # day = date.today()
-    # calendar.day_time[day.weekday()]
     now = dt.now()
     today = now.strftime('%A')
+    today_date = datetime.today().strftime('%Y-%m-%d')
 
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
-    day_customer = zip_customer.filter(pickup_day=today)
+    day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
+    suspended_customer = day_customer.filter(suspension_start__lt=today_date, suspension_end__gt=today_date)
+
+    # for item in customer:
+    # if day_customer.suspension_start < today_date < day_customer.suspension_end:
 
     context = {
         "customer": customer,
         "employee": logged_in_employee,
         "zip_customer": zip_customer,
         "day_customer": day_customer,
+        "suspended_customer": suspended_customer,
     }
     return render(request, 'employees/index.html', context)
-
 
 
 def create_employee_profile(request):
@@ -51,9 +52,20 @@ def create_employee_profile(request):
         return render(request, 'employees/employee_profile.html')
 
 
-    # show all customers and ability to filter by day
 def daily_view(request):
-    pass
+    user = request.user
+    logged_in_employee = Employees.objects.get(user=user)
+
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.all()
+
+    zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
+
+    context = {
+        "customer": customer,
+        "zip_customer": zip_customer,
+    }
+    return render(request, 'employees/index.html', context)
 
 
 def confirm(request, customers_id):
