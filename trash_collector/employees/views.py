@@ -37,6 +37,7 @@ def index(request):
     return render(request, 'employees/index.html', context)
 
 
+
 def create_employee_profile(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -55,7 +56,12 @@ def daily_view(request):
     pass
 
 
-# def confirm(request, customer_id):
-#     customer = apps.get_model('customers.Customer')
-#     customer.balance
-#     return HttpResponseRedirect(reverse('employees:index'))
+def confirm(request, customers_id):
+    # use customer_id to get the Customer object from the db of the customer who is being confirmed
+    # edit the balance property on that customer object to have charge added
+    # save customer object after change
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.get(id=customers_id)
+    customer.balance = customer.balance + 5
+    customer.save()
+    return HttpResponseRedirect(reverse('employees:index'))
