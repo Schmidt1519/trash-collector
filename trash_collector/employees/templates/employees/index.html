@@ -4,9 +4,10 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello {{ user.username }}!
+    Hello Employee, your user name is: {{user.username}}<br>
+Your Employee name is: {{employee.name}}<br>
 
-{% for customers in customer %}
+{% for customers in day_customer %}
 <ul style="list-style-type: none">
                 <li><h2>Customer name: {{customers.name}}</h2>
                   <br>
@@ -17,11 +18,12 @@
                   <h3>One Time Pickup: {{customers.one_time_pickup}}</h3>
                   <h3>Suspension Start: {{customers.suspension_start}}</h3>
                   <h3>Suspension End: {{customers.suspension_end}}</h3>
-                  <a href="{% url 'employees:confirm'  %}">Confirm Pickup</a>
+
                   <br><br>
                 </li>
 </ul>
 {% endfor %}
+
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>

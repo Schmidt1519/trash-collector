@@ -3,17 +3,36 @@ from django.shortcuts import render
 from django.apps import apps
 from .models import Employees
 from django.urls import reverse
+from datetime import date
+import calendar
+from datetime import datetime as dt
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 
 
 def index(request):
+    user = request.user
+    logged_in_employee = Employees.objects.get(user=user)
+
     # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.all()
+
+    # datetime_object = datetime.datetime.now()
+    # day = date.today()
+    # calendar.day_time[day.weekday()]
+    now = dt.now()
+    today = now.strftime('%A')
+
+    zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
+    day_customer = zip_customer.filter(pickup_day=today)
+
     context = {
-        'customer': customer
+        "customer": customer,
+        "employee": logged_in_employee,
+        "zip_customer": zip_customer,
+        "day_customer": day_customer,
     }
     return render(request, 'employees/index.html', context)
 
@@ -31,19 +50,12 @@ def create_employee_profile(request):
         return render(request, 'employees/employee_profile.html')
 
 
+    # show all customers and ability to filter by day
 def daily_view(request):
-    user = request.user
-    employee = Employees.objects.filter(user=user)
+    pass
 
-    Customer = apps.get_model('customers.Customer')
-    customer = Customer.objects.all()
-    context = {"customer": customer}
 
-# add further filters here
-    if customer.zip_code == employee.zip_code:
-        return render(request, 'employees/daily_view.html', context)
-
-def confirm(request):
-    customer = apps.get_model('customers.Customer')
-    customer.balance
-    return render(request, 'employees/index.html')
+# def confirm(request, customer_id):
+#     customer = apps.get_model('customers.Customer')
+#     customer.balance
+#     return HttpResponseRedirect(reverse('employees:index'))
