@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %}{% block header %} Employee Daily View {% endblock %}{% endblock %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    Hello {{ user.username }}!
 
 {% for customers in customer %}
 <ul style="list-style-type: none">
@@ -17,14 +15,10 @@
                   <h3>One Time Pickup: {{customers.one_time_pickup}}</h3>
                   <h3>Suspension Start: {{customers.suspension_start}}</h3>
                   <h3>Suspension End: {{customers.suspension_end}}</h3>
-                  <a href="{% url 'employees:confirm' customers.id %}">Confirm Pickup</a>
+                  <a href="{% url 'employees:confirm'  %}">Confirm Pickup</a>
                   <br><br>
                 </li>
 </ul>
 {% endfor %}
-  {% else %}
-    <p>You are at the employee index, but you are not logged in.</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'accounts:register' %}">Sign Up</a>
-  {% endif %}
+
 {% endblock %}

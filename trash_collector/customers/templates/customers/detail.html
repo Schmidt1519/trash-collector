@@ -7,18 +7,30 @@
 
 {% block content %}
 
-    <p>Customer Profile</p>
-            {% csrf_token %}
-            Name:<input type="text" name="name" id="name"><br>
-            Address:<input type="text" name="address" id="address"><br>
-            Zip Code:<input type="text" name="zip_code" id="zip_code"><br>
-            Pickup Day:<input type="text" name="pickup_day" id="pickup_day"><br>
-            Balance:<input type="text" name="balance" id="balance"><br>
-            One Time Pickup:<input type="text" name="one_time_pickup" id="one_time_pickup"><br>
-            Suspension Start:<input type="text" name="suspension_start" id="suspension_start"><br>
-            Suspension End:<input type="text" name="suspension_end" id="suspension_end"><br>
-        </form>
-
-    <a href="{% url 'customers:index' %}">Home</a>
+    <p>{{customer_detail.name}} Account</p>
+        <div class="">
+            Name: {{customer_detail.name}}
+        </div>
+        <div class="">
+            Address: {{customer_detail.address}}
+        </div>
+        <div class="">
+            Zip Code: {{customer_detail.zip_code}}
+        </div>
+        <div class="">
+            Pickup Day: {{customer_detail.pickup_day}}
+        </div>
+        <div class="">
+            Balance: ${{customer_detail.balance}}
+        </div>
+        <div class="">
+            One Time Pickup: {{customer_detail.one_time_pickup}}
+        </div>
+        <div class="">
+            Suspension Start: {{customer_detail.suspension_start}}
+        </div>
+        <div class="">
+            Suspension End: {{customer_detail.suspension_end}}
+        </div>
 
 {% endblock %}
