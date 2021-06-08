@@ -21,7 +21,7 @@
             Pickup Day: {{customer_detail.pickup_day}}
         </div>
         <div class="">
-            Balance: {{customer_detail.balance}}
+            Balance: ${{customer_detail.balance}}
         </div>
         <div class="">
             One Time Pickup: {{customer_detail.one_time_pickup}}
@@ -33,11 +33,4 @@
             Suspension End: {{customer_detail.suspension_end}}
         </div>
 
-    <a href="{% url 'customers:index' %}">Home</a>
-<br>
-    <a href="{% url 'customers:edit_profile' %}">Edit Profile</a>
-<br>
-    <a href="{% url 'customers:one_time_pickup' %}">Schedule One Time Pickup</a>
-<br>
-    <a href="{% url 'customers:suspend' %}">Schedule Service Suspension</a>
 {% endblock %}
