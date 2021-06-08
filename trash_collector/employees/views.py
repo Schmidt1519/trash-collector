@@ -53,7 +53,45 @@ def create_employee_profile(request):
 
     # show all customers and ability to filter by day
 def daily_view(request):
-    pass
+    user = request.user
+    logged_in_employee = Employees.objects.get(user=user)
+
+    # This line will get the Customer model from the other app, it can now be used to query the db
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.all()
+    now = dt.now()
+    today = now.strftime('%A')
+
+    zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
+    day_customer = zip_customer.filter(pickup_day=today)
+
+    context = {
+        "customer": customer,
+        "employee": logged_in_employee,
+        "zip_customer": zip_customer,
+        "day_customer": day_customer,
+    }
+    return render(request, 'employees/daily_view.html', context)
+
+def daily_view_update(request, day):
+    user = request.user
+    logged_in_employee = Employees.objects.get(user=user)
+
+    # This line will get the Customer model from the other app, it can now be used to query the db
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.all()
+
+    zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
+    day_customer = zip_customer.filter(pickup_day=day)
+
+    context = {
+        "customer": customer,
+        "employee": logged_in_employee,
+        "zip_customer": zip_customer,
+        "day_customer": day_customer,
+    }
+    return render(request, 'employees/daily_view_update.html', context)
+
 
 
 def confirm(request, customers_id):
@@ -64,4 +102,4 @@ def confirm(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
     customer.save()
-    return HttpResponseRedirect(reverse('employees:index'))
+    return HttpResponseRedirect(reverse('employees:daily_view'))
