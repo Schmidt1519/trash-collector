@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %} Customer Profile {% endblock %}
+
+{% block header %} Customer Profile {% endblock %}
 
 {% block content %}
 
-{% for customers in day_customer %}
 <ul style="list-style-type: none">
-                <li><h2>Customer name: {{customers.name}}</h2>
+                <li><h2>Customer name: {{customer.name}}</h2>
                   <br>
-                  <h3>Address: {{customers.address}}</h3>
-                  <h3>Zip Code: {{customers.zip_code}}</h3>
-                  <h3>Pickup Day: {{customers.pickup_day}}</h3>
-                  <h3>Balance: ${{customers.balance}}</h3>
-                  <h3>One Time Pickup: {{customers.one_time_pickup}}</h3>
-                  <h3>Suspension Start: {{customers.suspension_start}}</h3>
-                  <h3>Suspension End: {{customers.suspension_end}}</h3>
+                  <h3>Address: {{customer.address}}</h3>
+                  <h3>Zip Code: {{customer.zip_code}}</h3>
+                  <h3>Pickup Day: {{customer.pickup_day}}</h3>
+                  <h3>Balance: ${{customer.balance}}</h3>
+                  <h3>One Time Pickup: {{customer.one_time_pickup}}</h3>
+                  <h3>Suspension Start: {{customer.suspension_start}}</h3>
+                  <h3>Suspension End: {{customer.suspension_end}}</h3>
                   <br><br>
                 </li>
 </ul>
