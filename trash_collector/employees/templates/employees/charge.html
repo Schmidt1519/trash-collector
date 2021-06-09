@@ -9,7 +9,7 @@
 
     <h1>Confirm Pickup</h1>
         <p1 class="p-3 ml-3">Confirm pickup and charge for {{customers.name}}?</p1>
-        <form action="{% url 'employees:charge' %}" method="post">
+        <form action="{% url 'employees:charge' customers.id %}" method="post">
             {% csrf_token %}
 
             <input type="submit" value="Submit Profile">

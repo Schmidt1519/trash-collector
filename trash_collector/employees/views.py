@@ -24,7 +24,7 @@ def index(request):
 
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
     day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
-    suspended_customer = day_customer.filter(suspension_start__lt=today_date, suspension_end__gt=today_date)
+    # suspended_customer = day_customer.filter(suspension_start__lt=today_date, suspension_end__gt=today_date)
 
     # for item in customer:
     # if day_customer.suspension_start < today_date < day_customer.suspension_end:
@@ -34,7 +34,7 @@ def index(request):
         "employee": logged_in_employee,
         "zip_customer": zip_customer,
         "day_customer": day_customer,
-        "suspended_customer": suspended_customer,
+        # "suspended_customer": suspended_customer,
     }
     return render(request, 'employees/index.html', context)
 
@@ -102,4 +102,24 @@ def confirm(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
     customer.save()
-    return HttpResponseRedirect(reverse('employees:daily_view'))
+    return HttpResponseRedirect(reverse('employees:index'))
+
+
+# def charge(request, customers_id):
+#     Customer = apps.get_model('customers.Customer')
+#     customer = Customer.objects.get(id=customers_id)
+#     context = {'customer': customer}
+#
+#     if request.method == 'POST':
+#         customer.balance = customer.balance + 5
+#         customer.save()
+#         return HttpResponseRedirect(reverse('employees:index'))
+#     else:
+#         return render(request, 'employees/charge.html', context)
+
+
+# def customer_profile(request, customers_id):
+#     Customer = apps.get_model('customers.Customer')
+#     customer = Customer.objects.get(id=customers_id)
+#     context = {"customer": customer}
+#     return render(request,'employees:customer_profile', context)
