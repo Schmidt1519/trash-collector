@@ -5,6 +5,7 @@ from .models import Employees
 from django.urls import reverse
 from datetime import datetime as dt
 from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -117,6 +118,7 @@ def confirm(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
     customer.save()
+    messages.success(request, 'Pickup Confirmed')
     return HttpResponseRedirect(reverse('employees:index'))
 
 
