@@ -72,9 +72,10 @@ def daily_view(request):
     customer = Customer.objects.all()
     now = dt.now()
     today = now.strftime('%A')
+    today_date = datetime.today().strftime('%Y-%m-%d')
 
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
-    day_customer = zip_customer.filter(pickup_day=today)
+    day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
 
     context = {
         "customer": customer,
@@ -92,9 +93,13 @@ def daily_view_update(request, day):
     # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.all()
+    now = dt.now()
+    today = now.strftime('%A')
+    today_date = datetime.today().strftime('%Y-%m-%d')
 
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
     day_customer = zip_customer.filter(pickup_day=day)
+
 
     context = {
         "customer": customer,
@@ -135,3 +140,4 @@ def confirm(request, customers_id):
 #     customer = Customer.objects.get(id=customers_id)
 #     context = {"customer": customer}
 #     return render(request,'employees:customer_profile', context)
+

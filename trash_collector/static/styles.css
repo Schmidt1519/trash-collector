@@ -1,3 +1,87 @@
 body {
-    background-color:#grey;
+    background-color:lightgrey;
+    padding-top: 60px
+
+}
+
+.navbar-nav {
+
+}
+
+
+.daily_update_day{
+    background-color:rgba(0, 0, 0, 0.7);
+    color: red
+}
+
+.days:hover{
+    color: red;
+    text-decoration: none;
+    padding:0px
+
+}
+
+a:link, a:visited {
+  color: white;
+}
+
+.link {
+    background-color:rgba(0, 0, 0, 0.7);
+    padding: 3px;
+}
+.link:hover {
+    background-color:rgba(0, 0, 0, 1);
+    padding: 3px;
+    text-decoration: none;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+body {
+    background-color:lightgrey;
+    padding-top: 80px;
+    padding-left: 5px;
+
+}
+
+.navbar-nav {
+
+}
+
+
+.daily_update_day{
+    background-color:rgba(0, 0, 0, 0.7);
+    color: red;
+}
+
+.days{
+    font-size:60px;
+    text-decoration: none;
+    padding:0px
+    margin-right:100px
+
+}
+
+.days:hover{
+    color: red;
+    text-decoration: none;
+    padding:0px
+
+}
+
+a:link, a:visited {
+  color: white;
+}
+
+.link {
+    background-color:rgba(0, 0, 0, 0.7);
+    padding: 3px;
+}
+.link:hover {
+    background-color:rgba(0, 0, 0, 1);
+    padding: 3px;
+    text-decoration: none;
+}
+
 }
