@@ -7,7 +7,7 @@
     Hello Employee, your user name is: {{user.username}}<br>
 Your Employee name is: {{employee.name}}<br>
 
-{% for customers in non_suspended_customer %}
+{% for customers in customer %}
 <ul style="list-style-type: none">
                 <li><h2>Customer name: {{customers.name}}</h2>
                   <br>
@@ -18,6 +18,8 @@ Your Employee name is: {{employee.name}}<br>
                   <h3>One Time Pickup: {{customers.one_time_pickup}}</h3>
                   <h3>Suspension Start: {{customers.suspension_start}}</h3>
                   <h3>Suspension End: {{customers.suspension_end}}</h3>
+                    <h3>Is Suspended?: {{customers.is_suspended}}</h3>
+                  <a class="link" href="{% url 'employees:customer_profile' customers.id %}">Customer Profile</a>
                   <a onclick="alert_message()" class="link" href="{% url 'employees:confirm' customers.id %}">Confirm Pickup</a>
 
 
@@ -29,12 +31,13 @@ Your Employee name is: {{employee.name}}<br>
 
                     </ul>
 
+
                   <br><br>
                 </li>
 </ul>
 {% endfor %}
 
-  {% else %}
+{% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>

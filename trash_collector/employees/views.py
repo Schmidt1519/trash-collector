@@ -13,7 +13,10 @@ from django.contrib import messages
 
 def index(request):
     user = request.user
-    logged_in_employee = Employees.objects.get(user=user)
+    try:
+        logged_in_employee = Employees.objects.get(user=user)
+    except:
+        return HttpResponseRedirect(reverse('employees:create_employee_profile'))
 
     # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
@@ -36,9 +39,6 @@ def index(request):
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
     day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
     non_suspended_customer = day_customer.filter(is_suspended=False)
-
-    # for item in customer:
-    # if day_customer.suspension_start < today_date < day_customer.suspension_end:
 
     context = {
         "customer": customer,
@@ -111,9 +111,6 @@ def daily_view_update(request, day):
 
 
 def confirm(request, customers_id):
-    # use customer_id to get the Customer object from the db of the customer who is being confirmed
-    # edit the balance property on that customer object to have charge added
-    # save customer object after change
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
@@ -122,22 +119,8 @@ def confirm(request, customers_id):
     return HttpResponseRedirect(reverse('employees:index'))
 
 
-# def charge(request, customers_id):
-#     Customer = apps.get_model('customers.Customer')
-#     customer = Customer.objects.get(id=customers_id)
-#     context = {'customer': customer}
-#
-#     if request.method == 'POST':
-#         customer.balance = customer.balance + 5
-#         customer.save()
-#         return HttpResponseRedirect(reverse('employees:index'))
-#     else:
-#         return render(request, 'employees/charge.html', context)
-
-
-# def customer_profile(request, customers_id):
-#     Customer = apps.get_model('customers.Customer')
-#     customer = Customer.objects.get(id=customers_id)
-#     context = {"customer": customer}
-#     return render(request,'employees:customer_profile', context)
-
+def customer_profile(request, customers_id):
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.get(id=customers_id)
+    context = {"customer": customer}
+    return render(request, 'employees/customer_profile.html', context)
