@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}{% block header %} View Customers By Week {% endblock %}{% endblock %}
+{% block title %}{% block header %} Filter Customers By Day {% endblock %}{% endblock %}
 
 {% block content %}
 
-<H1>Filter By Day Of Week <br>
-  <a href="{% url 'employees:daily_view_update' 'Monday' %}">Monday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Tuesday' %}">Tuesday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Wednesday' %}">Wednesday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Thursday' %}">Thursday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Friday' %}">Friday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Saturday' %}">Saturday</a></li>
-  <a href="{% url 'employees:daily_view_update' 'Sunday' %}">Sunday</a></li>
+<H1 class="daily_update_day">
+  <a class="days" href="{% url 'employees:daily_view_update' 'Monday' %}">Monday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Tuesday' %}">Tuesday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Wednesday' %}">Wednesday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Thursday' %}">Thursday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Friday' %}">Friday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Saturday' %}">Saturday</a></li>
+  <a class="days" href="{% url 'employees:daily_view_update' 'Sunday' %}">Sunday</a></li>
 </H1><br>
 
 
