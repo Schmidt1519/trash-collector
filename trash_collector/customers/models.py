@@ -17,6 +17,7 @@ class Customer(models.Model):
     suspension_start = models.DateField(blank=True, null=True)
     suspension_end = models.DateField(blank=True, null=True)
     user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.CASCADE)
+    is_suspended = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

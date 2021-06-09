@@ -5,6 +5,7 @@ from .models import Employees
 from django.urls import reverse
 from datetime import datetime as dt
 from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -12,7 +13,10 @@ from datetime import datetime
 
 def index(request):
     user = request.user
+    # try:
     logged_in_employee = Employees.objects.get(user=user)
+    # except:
+    #     pass
 
     # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
@@ -22,19 +26,26 @@ def index(request):
     today = now.strftime('%A')
     today_date = datetime.today().strftime('%Y-%m-%d')
 
+    for item in customer:
+        if not item.suspension_start:
+            pass
+        elif item.suspension_start.strftime('%Y-%m-%d') <= today_date <= item.suspension_end.strftime('%Y-%m-%d'):
+            item.is_suspended = True
+            item.save()
+        else:
+            item.is_suspended = False
+            item.save()
+
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
     day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
-    # suspended_customer = day_customer.filter(suspension_start__lt=today_date, suspension_end__gt=today_date)
-
-    # for item in customer:
-    # if day_customer.suspension_start < today_date < day_customer.suspension_end:
+    non_suspended_customer = day_customer.filter(is_suspended=False)
 
     context = {
         "customer": customer,
         "employee": logged_in_employee,
         "zip_customer": zip_customer,
         "day_customer": day_customer,
-        # "suspended_customer": suspended_customer,
+        "non_suspended_customer": non_suspended_customer,
     }
     return render(request, 'employees/index.html', context)
 
@@ -102,6 +113,7 @@ def confirm(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
     customer.save()
+    messages.add_message(request, messages.INFO, 'Confirm pickup and charge?')
     return HttpResponseRedirect(reverse('employees:index'))
 
 
