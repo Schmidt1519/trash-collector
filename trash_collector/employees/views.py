@@ -5,7 +5,7 @@ from .models import Employees
 from django.urls import reverse
 from datetime import datetime as dt
 from datetime import datetime
-from django.contrib import messages
+import requests
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -67,7 +67,6 @@ def daily_view(request):
     user = request.user
     logged_in_employee = Employees.objects.get(user=user)
 
-    # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.all()
     now = dt.now()
@@ -90,16 +89,11 @@ def daily_view_update(request, day):
     user = request.user
     logged_in_employee = Employees.objects.get(user=user)
 
-    # This line will get the Customer model from the other app, it can now be used to query the db
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.all()
-    now = dt.now()
-    today = now.strftime('%A')
-    today_date = datetime.today().strftime('%Y-%m-%d')
 
     zip_customer = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
     day_customer = zip_customer.filter(pickup_day=day)
-
 
     context = {
         "customer": customer,
@@ -123,3 +117,26 @@ def customer_profile(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     context = {"customer": customer}
     return render(request, 'employees/customer_profile.html', context)
+
+
+def geocoding(request, customers_id):
+    API_KEY = 'AIzaSyDVsppAdPA97-3NLqYMMAfMlJdodGjeLUM'
+    Customer = apps.get_model('customers.Customer')
+    customer = Customer.objects.get(id=customers_id)
+    address = customer.address
+
+    parameters = {
+        'key': API_KEY,
+        'address': address
+    }
+
+    base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    response = requests.get(base_url, parameters=parameters).json()
+    response.keys()
+
+    if response['status'] == 'OK':
+        geometry = response['results'][0]['geometry']
+        latitude = geometry['location']['latitude']
+        longitude = geometry['location']['longitude']
+
+    print(latitude, longitude)
