@@ -5,6 +5,7 @@ from .models import Employees
 from django.urls import reverse
 from datetime import datetime as dt
 from datetime import datetime
+from django.contrib import messages
 import requests
 # Create your views here.
 
@@ -109,34 +110,29 @@ def confirm(request, customers_id):
     customer = Customer.objects.get(id=customers_id)
     customer.balance = customer.balance + 5
     customer.save()
+    messages.success(request, 'Pickup Confirmed')
     return HttpResponseRedirect(reverse('employees:index'))
 
 
 def customer_profile(request, customers_id):
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.get(id=customers_id)
-    context = {"customer": customer}
-    return render(request, 'employees/customer_profile.html', context)
-
-
-def geocoding(request, customers_id):
-    API_KEY = 'AIzaSyDVsppAdPA97-3NLqYMMAfMlJdodGjeLUM'
-    Customer = apps.get_model('customers.Customer')
-    customer = Customer.objects.get(id=customers_id)
+    API_KEY = 'AIzaSyAAFgBqp3QjLkKkjrvqX_TniOmS6I0K73I'
     address = customer.address
-
-    parameters = {
+    params = {
         'key': API_KEY,
         'address': address
     }
-
     base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
-    response = requests.get(base_url, parameters=parameters).json()
+    response = requests.get(base_url, params=params).json()
     response.keys()
-
     if response['status'] == 'OK':
         geometry = response['results'][0]['geometry']
-        latitude = geometry['location']['latitude']
-        longitude = geometry['location']['longitude']
-
-    print(latitude, longitude)
+        lat = geometry['location']['lat']
+        lon = geometry['location']['lng']
+    context = {
+        "customer": customer,
+        "lon": lon,
+        "lat": lat
+               }
+    return render(request, 'employees/customer_profile.html', context)
