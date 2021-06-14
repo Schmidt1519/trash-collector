@@ -41,6 +41,25 @@ def index(request):
     day_customer = zip_customer.filter(pickup_day=today) | zip_customer.filter(one_time_pickup=today_date)
     non_suspended_customer = day_customer.filter(is_suspended=False)
 
+# Testing multiple markers on a map #
+    # for cust in customer:
+    #     API_KEY = 'AIzaSyDVsppAdPA97-3NLqYMMAfMlJdodGjeLUM'
+    #     address = cust.address
+    #     params = {
+    #         'key': API_KEY,
+    #         'address': address
+    #     }
+    #     base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    #     response = requests.get(base_url, params=params).json()
+    #     response.keys()
+    #     if response['status'] == 'OK':
+    #         geometry = response['results'][0]['geometry']
+    #         lat = geometry['location']['lat']
+    #         lon = geometry['location']['lng']
+    #     location = str(lat)+", "+str(lon)
+    #     cust.grid = location
+    #     cust.save()
+
     context = {
         "customer": customer,
         "employee": logged_in_employee,
@@ -117,7 +136,7 @@ def confirm(request, customers_id):
 def customer_profile(request, customers_id):
     Customer = apps.get_model('customers.Customer')
     customer = Customer.objects.get(id=customers_id)
-    API_KEY = 'AIzaSyAAFgBqp3QjLkKkjrvqX_TniOmS6I0K73I'
+    API_KEY = 'AIzaSyDVsppAdPA97-3NLqYMMAfMlJdodGjeLUM'
     address = customer.address
     params = {
         'key': API_KEY,

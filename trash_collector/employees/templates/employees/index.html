@@ -37,6 +37,25 @@ Your Employee name is: {{employee.name}}<br>
 </ul>
 {% endfor %}
 
+{% comment "Testing multiple markers on a map" %}
+<script>
+function initMap() {
+  const myLatLng = { lat: -25.363, lng: 131.044 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: myLatLng,
+  });
+  new google.maps.Marker({
+    position: myLatLng,
+    map,
+    title: "Hello World!",
+  });
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?&key=AIzaSyAAFgBqp3QjLkKkjrvqX_TniOmS6I0K73I&callback=initMap" async defer></script>>
+{% endcomment %}
+
 {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>

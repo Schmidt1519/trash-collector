@@ -18,6 +18,7 @@ class Customer(models.Model):
     suspension_end = models.DateField(blank=True, null=True)
     user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.CASCADE)
     is_suspended = models.BooleanField(default=False)
+    grid = models.CharField(max_length=50, default=None, blank=True, null=True)
 
     def __str__(self):
         return self.name
