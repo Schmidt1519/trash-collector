@@ -9,31 +9,25 @@ Your Employee name is: {{employee.name}}<br>
 
 {% for customers in non_suspended_customer %}
 <ul style="list-style-type: none">
-                <li><h2>Customer name: {{customers.name}}</h2>
-                  <br>
-                  <h3>Address: {{customers.address}}</h3>
-                  <h3>Zip Code: {{customers.zip_code}}</h3>
-                  <h3>Pickup Day: {{customers.pickup_day}}</h3>
-                  <h3>Balance: ${{customers.balance}}</h3>
-                  <h3>One Time Pickup: {{customers.one_time_pickup}}</h3>
-                  <h3>Suspension Start: {{customers.suspension_start}}</h3>
-                  <h3>Suspension End: {{customers.suspension_end}}</h3>
-                    <h3>Is Suspended?: {{customers.is_suspended}}</h3>
-                  <a class="link" href="{% url 'employees:customer_profile' customers.id %}">Customer Profile</a>
-                  <a onclick="alert_message()" class="link" href="{% url 'employees:confirm' customers.id %}">Confirm Pickup</a>
+    <br>
+        <li><h3>Customer name: {{customers.name}}</h3>
+          <h5>Address: {{customers.address}}</h5>
+          <h5>Zip Code: {{customers.zip_code}}</h5>
+          <h5>Pickup Day: {{customers.pickup_day}}</h5>
+          <h5>Balance: ${{customers.balance}}</h5>
+          <h5>One Time Pickup: {{customers.one_time_pickup}}</h5>
+          <h5>Suspension Start: {{customers.suspension_start}}</h5>
+          <h5>Suspension End: {{customers.suspension_end}}</h5>
+          <h5>Is Suspended?: {{customers.is_suspended}}</h5>
+          <a class="link" href="{% url 'employees:customer_profile' customers.id %}">Customer Profile</a>
+          <a onclick="alert_message()" class="link" href="{% url 'employees:confirm' customers.id %}">Confirm Pickup</a>
 
-
-                                <script>
-                                       function alert_message(){
-                                       alert("Pickup confirmed")
-                                       };
-                                </script></li>
-
-                    </ul>
-
-
-                  <br><br>
-                </li>
+                <script>
+                       function alert_message(){
+                       alert("Pickup confirmed")
+                       };
+                </script>
+        </li>
 </ul>
 {% endfor %}
 

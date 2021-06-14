@@ -5,18 +5,17 @@
 {% block header %} Customer Profile {% endblock %}
 
 {% block content %}
-
+<br>
 <ul style="list-style-type: none">
-                <li><h2>Customer name: {{customer.name}}</h2>
+                <li><h3>Customer name: {{customer.name}}</h3>
+                  <h5>Address: {{customer.address}}</h5>
+                  <h5>Zip Code: {{customer.zip_code}}</h5>
+                  <h5>Pickup Day: {{customer.pickup_day}}</h5>
+                  <h5>Balance: ${{customer.balance}}</h5>
+                  <h5>One Time Pickup: {{customer.one_time_pickup}}</h5>
+                  <h5>Suspension Start: {{customer.suspension_start}}</h5>
+                  <h5>Suspension End: {{customer.suspension_end}}</h5>
                   <br>
-                  <h3>Address: {{customer.address}}</h3>
-                  <h3>Zip Code: {{customer.zip_code}}</h3>
-                  <h3>Pickup Day: {{customer.pickup_day}}</h3>
-                  <h3>Balance: ${{customer.balance}}</h3>
-                  <h3>One Time Pickup: {{customer.one_time_pickup}}</h3>
-                  <h3>Suspension Start: {{customer.suspension_start}}</h3>
-                  <h3>Suspension End: {{customer.suspension_end}}</h3>
-                  <br><br>
                 </li>
 </ul>
 <img src="https://maps.googleapis.com/maps/api/staticmap?center={{customer.address}}&zoom=14&size=600x600&maptype=roadmap
